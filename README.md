@@ -1,35 +1,40 @@
 # prepaid-customer-behaviour-analysis
 Analysis of prepaid customer behaviour and revenue contribution using SQL and analytics techniques.
 
-## Problem
-Telecom prepaid environments require a clear understanding of customer behaviour
-to identify consistent revenue drivers and irregular usage patterns.
+# Prepaid Customer Behaviour & Segmentation Analysis
 
-## Data
-This project focuses on analysis logic and methodology.
-No real customer data is included.
+## Context
+Prepaid telecom environments are highly dynamic, with customer behaviour
+varying significantly across usage patterns, purchase frequency, and revenue contribution.
+Understanding these behaviours is critical for customer value management (CVM) and prepaid product performance.
 
-All examples and structures are either synthetic or representative of
-typical telecom datasets, used solely to demonstrate analytical approach.
+## Objective
+To analyse prepaid customer behaviour and segment customers based on consistency
+and usage patterns, in order to understand revenue contribution and inform
+data-driven decision-making.
 
+## Analytical Approach
+The analysis focused on:
+- Defining meaningful customer-level KPIs (activity, frequency, spend)
+- Aggregating behaviour over time to avoid single-month bias
+- Segmenting customers into regular and irregular usage cohorts
+- Comparing revenue contribution and behavioural trends across segments
 
-## Approach
-- Aggregated monthly customer KPIs using SQL
-- Segmented customers into regular and irregular cohorts
-- Analysed spend, purchase frequency, and usage behaviour
-- Validated trends using descriptive statistics
+No real customer data was used or shared in this project.
+The focus is on analytical logic and business reasoning.
 
 ## Key Insights
-- A relatively small cohort of regular customers contributed a disproportionate share of revenue
-- Irregular users exhibited volatile spend patterns and higher churn risk
-- Behaviour-based segmentation provided clearer insights than single-month metrics
+- A relatively small cohort of regular customers contributed a disproportionate share of prepaid revenue
+- Irregular customers showed volatile behaviour and higher risk of churn
+- Behavioural consistency provided stronger insights than point-in-time metrics
 
 ## Business Implications
-- Enables targeted retention strategies for high-value customers
-- Highlights upsell and reactivation opportunities for irregular users
-- Supports data-driven prepaid product and CVM decisions
+- Supports targeted retention strategies for high-value customers
+- Highlights opportunities for reactivation and upsell within irregular segments
+- Informs prepaid product optimisation and CVM strategy
 
 ## Limitations
-- Analysis based on aggregated historical data
-- No real-time behavioural signals included
-- Future work could incorporate lifecycle and predictive modelling
+- Analysis based on aggregated historical behaviour
+- No real-time behavioural signals
+- Results intended to demonstrate analytical thinking, not operational outputs
+
