@@ -28,6 +28,13 @@ The focus is on analytical logic and business reasoning.
 - Irregular customers showed volatile behaviour and higher risk of churn
 - Behavioural consistency provided stronger insights than point-in-time metrics
 
+## Supporting Visuals
+Illustrative visuals demonstrating customer segmentation, revenue contribution,
+and behavioural trends are available in the /visuals folder.
+
+Note: All visuals are created using synthetic data for demonstration purposes only.
+
+
 ## Business Implications
 - Supports targeted retention strategies for high-value customers
 - Highlights opportunities for reactivation and upsell within irregular segments
