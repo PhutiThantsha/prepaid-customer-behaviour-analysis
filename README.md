@@ -1,47 +1,64 @@
-# prepaid-customer-behaviour-analysis
-Analysis of prepaid customer behaviour and revenue contribution using SQL and analytics techniques.
+# Prepaid Customer Purchasing & Segmentation Analysis
 
-# Prepaid Customer Behaviour & Segmentation Analysis
+A reproducible SQL portfolio project exploring purchase consistency and purchase-value contribution across a fixed prepaid customer base.
 
-## Context
-Prepaid telecom environments are highly dynamic, with customer behaviour
-varying significantly across usage patterns, purchase frequency, and revenue contribution.
-Understanding these behaviours is critical for customer value management (CVM) and prepaid product performance.
+**Status:** synthetic demonstration. All customer IDs, transactions and results are generated for this repository. This is not an MTN operational analysis. No customer data or employer data is included.
 
-## Objective
-To analyse prepaid customer behaviour and segment customers based on consistency
-and usage patterns, in order to understand revenue contribution and inform
-data-driven decision-making.
+## Business question
 
-## Analytical Approach
-The analysis focused on:
-- Defining meaningful customer-level KPIs (activity, frequency, spend)
-- Aggregating behaviour over time to avoid single-month bias
-- Segmenting customers into regular and irregular usage cohorts
-- Comparing revenue contribution and behavioural trends across segments
+How does six-month purchasing consistency relate to the distribution of purchase value, and which customer groups warrant further investigation for retention or reactivation?
 
-No real customer data was used or shared in this project.
-The focus is on analytical logic and business reasoning.
+## Run the analysis
 
-## Key Insights
-- A relatively small cohort of regular customers contributed a disproportionate share of prepaid revenue
-- Irregular customers showed volatile behaviour and higher risk of churn
-- Behavioural consistency provided stronger insights than point-in-time metrics
+Requires Python 3.10+ with its standard-library SQLite module; no additional packages or downloads.
 
-## Supporting Visuals
-Illustrative visuals demonstrating customer segmentation, revenue contribution,
-and behavioural trends are available in the /visuals folder.
+```bash
+python run_analysis.py
+```
 
-Note: All visuals are created using synthetic data for demonstration purposes only.
+The script creates an in-memory database, generates deterministic data with seed 42, runs [the SQL](sql/analysis.sql), checks reconciliation and writes [RESULTS.md](RESULTS.md). It works from any working directory. SQL uses SQLite date and aggregation syntax; adapt these functions before running on another database engine.
 
+## Data and grain
 
-## Business Implications
-- Supports targeted retention strategies for high-value customers
-- Highlights opportunities for reactivation and upsell within irregular segments
-- Informs prepaid product optimisation and CVM strategy
+| Table | Grain | Purpose |
+|---|---|---|
+| `customers` | One synthetic customer | Fixed eligible base of 200 customers |
+| `months` | One calendar month | January–June 2026, six complete months |
+| `purchases` | One purchase | Product, integer purchase amount in cents, synthetic allowance and use |
+| `customer_month` | One customer per month | All 1,200 combinations, including zero-purchase months |
+| `customer_segments` | One customer over six months | Mutually exclusive purchasing segments |
 
-## Limitations
-- Analysis based on aggregated historical behaviour
-- No real-time behavioural signals
-- Results intended to demonstrate analytical thinking, not operational outputs
+All customers are assumed eligible throughout the window. New activations, disconnections, recycled numbers and incomplete observation periods are outside this demonstration. In operational work, resolve customer identity and eligibility before building the monthly panel.
 
+## Definitions
+
+| Metric or segment | Definition |
+|---|---|
+| Purchase month | Month containing at least one observed purchase |
+| Regular | Purchases in five or six of the six months |
+| Occasional | Purchases in one to four months |
+| No observed purchases | No purchases in the window; this does **not** establish inactivity |
+| Purchase value | Sum of transaction amounts; not recognised revenue, recharge value or margin |
+| Share of value | Segment purchase value divided by total purchase value |
+| Value per eligible customer-month | Segment value divided by segment customers and six months; includes zero-purchase months |
+
+The five-month boundary is an illustrative rule, not a validated business threshold. Amounts are stored as integer cents; rounding occurs only when presenting the results. Tax treatment is not modelled.
+
+## Results and business interpretation
+
+See the generated [results table](RESULTS.md) for exact counts and values. The simulator deliberately assigns different purchase probabilities to groups of customers, so any concentration of value is partly designed into the sample.
+
+A practical next step would be to compare future purchasing across these segments and test whether they add predictive value beyond prior spend. Campaign recommendations would then require cost, margin, consent and incremental-response evidence. This project does not claim that occasional purchasers churn more, or that a campaign will increase revenue.
+
+## Validation and limitations
+
+The run checks that the full base is retained, each customer receives one segment and segment totals reconcile exactly to source purchase value. Database constraints enforce unique IDs, positive amounts, valid customer/month references and use within the generated allowance.
+
+Segmentation uses the entire observation window and is descriptive. For predictive evaluation, assign segments using an earlier window and evaluate outcomes in a separate later period. Synthetic behaviour does not establish real-world retention, causality or commercial value.
+
+## Repository guide
+
+- `run_analysis.py`: data generation, SQL execution and reconciliation.
+- `sql/analysis.sql`: customer-month aggregation and segmentation.
+- `RESULTS.md`: reproducible demonstration results.
+- `visuals/`: original illustrative images, retained as historical examples. They are not generated by this pipeline and must not be treated as evidence for its results.
